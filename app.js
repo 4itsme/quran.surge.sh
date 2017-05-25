@@ -51,7 +51,7 @@ require.config({
 
 
 	var _dependencies = [
-					 'vue', 'qMain'
+					 'vue', 'vue-router', 'qMain'
 					,'underscore' ,'jquery', 'jqueryMark', 'moment'
 					,'Q' ,'qUtil' 
 					,'qSearch'
@@ -64,7 +64,7 @@ require.config({
 		];
 
 	require(_dependencies, function( 
-					Vue, qMain
+					Vue, VueRouter, qMain
 					,_ ,$, jqueryMark, moment
 					,Q ,qUtil 
 					,qSearch
@@ -75,6 +75,20 @@ require.config({
 					//,qRoot ,qRootLemDict ,qRootMeanings ,qSearch
 					//,qSarf ,qAntonyms
 		){
+
+
+	const User = {
+	  template: '<div>User {{ $route.params.id }}</div>'
+	}
+
+	const router = new VueRouter({
+	  routes: [
+	    // dynamic segments start with a colon
+	    { path: '/user/:id', component: User }
+	  ]
+	})
+
+
 	var vm;
 
 	initializeVueComponents(Vue);
@@ -441,6 +455,7 @@ require.config({
 
 	function initializeVM(){
 		vm = new Vue({
+		  router,
 		  el: '#app-1',
 		  data: {
 		  	showAr: true,
@@ -567,7 +582,7 @@ require.config({
 				vm.goPage(newPage);
 			}
 		  }
-			 });
+			 }).$mount('#app-1');
 		return vm;
 	}
 
